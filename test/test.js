@@ -77,3 +77,23 @@ assert.equal(3, ajlogo.evaluateList([1,2,3], ctx));
 assert.equal('foobar', ajlogo.evaluateList(['add','"foo','"bar'], ctx));
 assert.equal(3, ajlogo.evaluateList(['add',':one',':two'], ctx));
 
+// Compile text
+
+result = ajlogo.compileText("add");
+assert.ok(result);
+assert.equal(1, result.length);
+assert.ok(result[0] instanceof ajlogo.ProcedureReference);
+
+result = ajlogo.compileText("add 1 2");
+assert.ok(result);
+assert.equal(3, result.length);
+assert.ok(result[0] instanceof ajlogo.ProcedureReference);
+assert.equal(1, result[1]);
+assert.equal(2, result[2]);
+
+result = ajlogo.compileText("add :one :two");
+assert.ok(result);
+assert.equal(3, result.length);
+assert.ok(result[0] instanceof ajlogo.ProcedureReference);
+assert.ok(result[1] instanceof ajlogo.VariableReference);
+assert.ok(result[2] instanceof ajlogo.VariableReference);
