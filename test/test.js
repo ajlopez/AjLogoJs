@@ -9,18 +9,18 @@ var ctx = new ajlogo.Context();
 
 assert.ok(ctx);
 
-assert.equal(null, ctx.get('foo'));
+assert.equal(null, ctx.getVariable('foo'));
 
-ctx.set('foo', 'bar');
-assert.equal('bar', ctx.get('foo'));
+ctx.setVariable('foo', 'bar');
+assert.equal('bar', ctx.getVariable('foo'));
 
 var list = new ajlogo.List(1, null);
 assert.equal(1, list.first);
 assert.equal(null, list.rest);
 
-ctx.set('add', function(x, y) { return x + y; });
+ctx.setProcedure('add', function(x, y) { return x + y; });
 
-var add = ctx.get('add');
+var add = ctx.getProcedure('add');
 
 var array = [add, 2, 3];
 
