@@ -22,7 +22,9 @@ ctx.setProcedure('add', function(x, y) { return x + y; });
 var add = ctx.getProcedure('add');
 
 var expression = new ajlogo.CompositeExpression([1, 2, 3]);
-
 assert.equal(3, expression.evaluate(ctx));
+
+expression = new ajlogo.CompositeExpression([new ajlogo.Procedure('add'), 2, 3]);
+assert.equal(5, expression.evaluate(ctx));
 
 
