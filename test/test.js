@@ -2,7 +2,6 @@
 var assert = require('assert');
 var ajlogo = require('../lib/ajlogo.js');
 
-
 // Context
 
 var ctx = new ajlogo.Context();
@@ -22,7 +21,8 @@ ctx.setProcedure('add', function(x, y) { return x + y; });
 
 var add = ctx.getProcedure('add');
 
-var array = [add, 2, 3];
+var expression = new ajlogo.CompositeExpression([1, 2, 3]);
 
-assert.equal(5, array.evaluate(ctx));
+assert.equal(3, expression.evaluate(ctx));
+
 
