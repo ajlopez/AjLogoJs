@@ -67,4 +67,13 @@ list = ajlogo.compileList(['add', '"foo', '"bar']);
 assert.ok(list[0] instanceof ajlogo.ProcedureReference);
 assert.equal("foobar", (new ajlogo.CompositeExpression(list)).evaluate(ctx));
 
+list = ajlogo.compileList(['add', ':one', ':two']);
+assert.ok(list[0] instanceof ajlogo.ProcedureReference);
+assert.equal(3, (new ajlogo.CompositeExpression(list)).evaluate(ctx));
+
+// Evaluate List
+
+assert.equal(3, ajlogo.evaluateList([1,2,3], ctx));
+assert.equal('foobar', ajlogo.evaluateList(['add','"foo','"bar'], ctx));
+assert.equal(3, ajlogo.evaluateList(['add',':one',':two'], ctx));
 
