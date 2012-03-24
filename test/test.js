@@ -110,6 +110,8 @@ assert.ok(ctx.getProcedure('add'));
 assert.ok(ctx.getProcedure('make'));
 assert.ok(ctx.getProcedure('word'));
 assert.ok(ctx.getProcedure('output'));
+assert.ok(ctx.getProcedure('print'));
+assert.ok(ctx.getProcedure('type'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -146,3 +148,14 @@ assert.equal('y', result.argnames[1]);
 
 assert.equal(3, ajlogo.evaluateText('addxy 1 2'));
 
+// Print and Type
+
+var output = '';
+
+ajlogo.registerOutput(function(value) { output += value; });
+ajlogo.evaluateText('type 1 type 2');
+assert.equal('12', output);
+
+output = '';
+ajlogo.evaluateText('print 1 print 2');
+assert.equal('1\r\n2\r\n', output);
