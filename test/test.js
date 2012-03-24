@@ -101,10 +101,25 @@ assert.equal(3, result[2]);
 
 assert.ok(ctx.getProcedure('add'));
 assert.ok(ctx.getProcedure('make'));
+assert.ok(ctx.getProcedure('word'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
 assert.equal(3, ctx.getVariable('three'));
 
+result = ajlogo.compileText('add 1 2');
+assert.equal(1, result[1]);
+assert.equal(2, result[2]);
+assert.equal(3, ajlogo.evaluateText('add 1 2', ctx));
+assert.equal(3, ajlogo.evaluateText('add 1 2'));
 
+assert.equal(null, ajlogo.evaluateText('make "four 3', ctx));
+
+// To
+
+assert.ok(ctx.getProcedure('to'));
+
+ajlogo.evaluateText('to setfoo make "foo "bar end');
+result = ctx.getProcedure('setfoo');
+assert.ok(result);
 
