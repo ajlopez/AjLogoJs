@@ -104,6 +104,11 @@ assert.ok(result[0] instanceof ajlogo.ProcedureReference);
 assert.equal("three", result[1]);
 assert.equal(3, result[2]);
 
+result = ajlogo.compileText('print [1 2 3]');
+assert.equal(2, result.length);
+assert.ok(result[1] instanceof Array);
+assert.equal(3, result[1].length);
+
 // Primitives
 
 assert.ok(ctx.getProcedure('add'));
@@ -159,3 +164,12 @@ assert.equal('12', output);
 output = '';
 ajlogo.evaluateText('print 1 print 2');
 assert.equal('1\r\n2\r\n', output);
+
+output = '';
+ajlogo.evaluateText('type [1 2 3]');
+assert.equal('1 2 3', output);
+
+output = '';
+ajlogo.evaluateText('print [1 2 3]');
+assert.equal('1 2 3\r\n', output);
+
