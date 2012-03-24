@@ -13,6 +13,13 @@ assert.equal(null, ctx.getVariable('foo'));
 ctx.setVariable('foo', 'bar');
 assert.equal('bar', ctx.getVariable('foo'));
 
+// Nested Context
+
+var newctx = new ajlogo.Context(ctx);
+
+assert.ok(ctx.getProcedure('make'));
+assert.ok(newctx.getProcedure('make'));
+
 // Evaluate Composite Expression
 
 var expression = new ajlogo.CompositeExpression([1, 2, 3]);
@@ -102,6 +109,7 @@ assert.equal(3, result[2]);
 assert.ok(ctx.getProcedure('add'));
 assert.ok(ctx.getProcedure('make'));
 assert.ok(ctx.getProcedure('word'));
+assert.ok(ctx.getProcedure('output'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -119,7 +127,22 @@ assert.equal(null, ajlogo.evaluateText('make "four 3', ctx));
 
 assert.ok(ctx.getProcedure('to'));
 
-ajlogo.evaluateText('to setfoo make "foo "bar end');
+ajlogo.evaluateText('to setfoo make "foo "newbar end');
 result = ctx.getProcedure('setfoo');
 assert.ok(result);
+assert.ok(result.body);
+assert.ok(result.body instanceof Array);
+assert.equal(3, result.body.length);
+
+ajlogo.evaluateText('setfoo');
+
+assert.equal("newbar", ctx.getVariable('foo'));
+
+ajlogo.evaluateText('to addxy :x :y output add :x :y end');
+result = ctx.getProcedure('addxy');
+assert.equal(2, result.argnames.length);
+assert.equal('x', result.argnames[0]);
+assert.equal('y', result.argnames[1]);
+
+assert.equal(3, ajlogo.evaluateText('addxy 1 2'));
 
