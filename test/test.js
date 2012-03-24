@@ -4,7 +4,7 @@ var ajlogo = require('../lib/ajlogo.js');
 
 // Context
 
-var ctx = new ajlogo.Context();
+var ctx = ajlogo.TopContext;
 
 assert.ok(ctx);
 
@@ -12,14 +12,6 @@ assert.equal(null, ctx.getVariable('foo'));
 
 ctx.setVariable('foo', 'bar');
 assert.equal('bar', ctx.getVariable('foo'));
-
-var list = new ajlogo.List(1, null);
-assert.equal(1, list.first);
-assert.equal(null, list.rest);
-
-ctx.setProcedure('add', function(x, y) { return x + y; });
-
-var add = ctx.getProcedure('add');
 
 // Evaluate Composite Expression
 
@@ -97,3 +89,22 @@ assert.equal(3, result.length);
 assert.ok(result[0] instanceof ajlogo.ProcedureReference);
 assert.ok(result[1] instanceof ajlogo.VariableReference);
 assert.ok(result[2] instanceof ajlogo.VariableReference);
+
+result = ajlogo.compileText('make "three 3');
+assert.ok(result);
+assert.equal(3, result.length);
+assert.ok(result[0] instanceof ajlogo.ProcedureReference);
+assert.equal("three", result[1]);
+assert.equal(3, result[2]);
+
+// Primitives
+
+assert.ok(ctx.getProcedure('add'));
+assert.ok(ctx.getProcedure('make'));
+
+result = ajlogo.compileText('make "three 3');
+(new ajlogo.CompositeExpression(result)).evaluate(ctx);
+assert.equal(3, ctx.getVariable('three'));
+
+
+
