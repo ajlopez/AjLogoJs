@@ -27,4 +27,8 @@ assert.equal(3, expression.evaluate(ctx));
 expression = new ajlogo.CompositeExpression([new ajlogo.Procedure('add'), 2, 3]);
 assert.equal(5, expression.evaluate(ctx));
 
+expression = new ajlogo.CompositeExpression([new ajlogo.Procedure('add'), 2, 3, new ajlogo.Procedure('add'), 4, 5]);
+assert.equal(9, expression.evaluate(ctx));
 
+expression = new ajlogo.CompositeExpression([new ajlogo.Procedure('add'), 2, new ajlogo.Procedure('add'), 4, 5]);
+assert.equal(11, expression.evaluate(ctx));
