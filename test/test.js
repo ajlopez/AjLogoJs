@@ -200,6 +200,7 @@ assert.ok(ctx.getProcedure('ignore'));
 assert.ok(ctx.getProcedure('for'));
 assert.ok(ctx.getProcedure('repcount'));
 assert.ok(ctx.getProcedure('while'));
+assert.ok(ctx.getProcedure('until'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -500,4 +501,14 @@ assert.equal('4321', output);
 output = ''
 ajlogo.evaluateText('make "a 1 to dox while :a [ type :a stop] type "end end dox');
 assert.equal('1', output);
+
+// until
+
+output = '';
+ajlogo.evaluateText('make "a 0 until :a [type :a make "a difference :a 1]');
+assert.equal('0', output);
+
+output = ''
+ajlogo.evaluateText('make "a 0 to dox until :a [ type :a stop] type "end end dox');
+assert.equal('0', output);
 
