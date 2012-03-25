@@ -180,6 +180,12 @@ assert.ok(ctx.getProcedure('sqrt'));
 assert.ok(ctx.getProcedure('exp'));
 assert.ok(ctx.getProcedure('log10'));
 assert.ok(ctx.getProcedure('ln'));
+assert.ok(ctx.getProcedure('sin'));
+assert.ok(ctx.getProcedure('cos'));
+assert.ok(ctx.getProcedure('tan'));
+assert.ok(ctx.getProcedure('radsin'));
+assert.ok(ctx.getProcedure('radcos'));
+assert.ok(ctx.getProcedure('radtan'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -363,5 +369,24 @@ assert.equal(2, ajlogo.evaluateText('log10 100'));
 assert.equal(Math.E, ajlogo.evaluateText('exp 1'));
 assert.equal(Math.log(10), ajlogo.evaluateText('ln 10'));
 
+assert.equal(0, ajlogo.evaluateText('sin 0'));
+assert.equal(0, ajlogo.evaluateText('radsin 0'));
 
+assert.equal(1, ajlogo.evaluateText('sin 90'));
+assert.equal(1, ajlogo.evaluateText('radsin ' + (Math.PI/2)));
+
+assert.equal(1, ajlogo.evaluateText('cos 0'));
+assert.equal(1, ajlogo.evaluateText('radcos 0'));
+
+result = ajlogo.evaluateText('cos 90');
+assert.ok( 0 <= result && result <= 1e-10);
+result = ajlogo.evaluateText('radcos ' + (Math.PI/2));
+assert.ok( 0 <= result && result <= 1e-10);
+
+result = ajlogo.evaluateText('tan 45');
+assert.ok( 0.99999999 <= result && result <= 1.000001);
+assert.equal(0, ajlogo.evaluateText('tan 0'));
+result = ajlogo.evaluateText('radtan '+ (Math.PI/4));
+assert.ok( 0.99999999 <= result && result <= 1.000001);
+assert.equal(0, ajlogo.evaluateText('radtan 0'));
 
