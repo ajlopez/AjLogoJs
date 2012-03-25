@@ -209,6 +209,8 @@ assert.ok(ctx.getProcedure('thing'));
 assert.ok(ctx.getProcedure('numberp'));
 assert.ok(ctx.getProcedure('listp'));
 assert.ok(ctx.getProcedure('wordp'));
+assert.ok(ctx.getProcedure('equalp'));
+assert.ok(ctx.getProcedure('notequalp'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -559,4 +561,24 @@ assert.ok(ajlogo.evaluateText('listp [1 2 3]'));
 assert.ok(!ajlogo.evaluateText('numberp "foo'));
 assert.ok(!ajlogo.evaluateText('wordp [1 2 3]'));
 assert.ok(!ajlogo.evaluateText('listp 1'));
+
+// equalp, notequalp 
+
+assert.ok(ajlogo.evaluateText('equalp 1 1'));
+assert.ok(ajlogo.evaluateText('equalp "a "a'));
+assert.ok(ajlogo.evaluateText('equalp [1 2] [1 2]'));
+
+assert.ok(!ajlogo.evaluateText('equalp 1 2'));
+assert.ok(!ajlogo.evaluateText('equalp "a "b'));
+assert.ok(!ajlogo.evaluateText('equalp [1 2] [1]'));
+assert.ok(!ajlogo.evaluateText('equalp [1 2] [2 3]'));
+assert.ok(!ajlogo.evaluateText('equalp [1 2 3] [1 2 4]'));
+
+assert.ok(!ajlogo.evaluateText('notequalp 1 1'));
+assert.ok(!ajlogo.evaluateText('notequalp "a "a'));
+assert.ok(!ajlogo.evaluateText('notequalp [1 2] [1 2]'));
+
+assert.ok(ajlogo.evaluateText('notequalp 1 2'));
+assert.ok(ajlogo.evaluateText('notequalp "a "b'));
+assert.ok(ajlogo.evaluateText('notequalp [1 2] [1]'));
 
