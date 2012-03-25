@@ -192,6 +192,8 @@ assert.ok(ctx.getProcedure('arccos'));
 assert.ok(ctx.getProcedure('radarctan'));
 assert.ok(ctx.getProcedure('radarcsin'));
 assert.ok(ctx.getProcedure('radarccos'));
+assert.ok(ctx.getProcedure('iseq'));
+assert.ok(ctx.getProcedure('rseq'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -418,3 +420,31 @@ assert.ok( -0.00000001 <= result && result <= 0.00000001);
 result = ajlogo.evaluateText('arcsin 0');
 assert.ok( -0.00000001 <= result && result <= 0.00000001);
 
+result = ajlogo.evaluateText('iseq 1 3');
+assert.ok(result instanceof Array);
+assert.equal(3, result.length);
+assert.equal(1, result[0]);
+assert.equal(2, result[1]);
+assert.equal(3, result[2]);
+
+result = ajlogo.evaluateText('iseq 1 -2');
+assert.ok(result instanceof Array);
+assert.equal(4, result.length);
+assert.equal(1, result[0]);
+assert.equal(0, result[1]);
+assert.equal(-1, result[2]);
+assert.equal(-2, result[3]);
+
+result = ajlogo.evaluateText('rseq 1 2 2');
+assert.ok(result instanceof Array);
+assert.equal(3, result.length);
+assert.equal(1, result[0]);
+assert.equal(1.5, result[1]);
+assert.equal(2, result[2]);
+
+result = ajlogo.evaluateText('rseq 1 -1 2');
+assert.ok(result instanceof Array);
+assert.equal(3, result.length);
+assert.equal(1, result[0]);
+assert.equal(0, result[1]);
+assert.equal(-1, result[2]);
