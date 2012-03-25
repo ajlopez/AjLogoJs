@@ -153,6 +153,7 @@ assert.ok(ctx.getProcedure('output'));
 assert.ok(ctx.getProcedure('stop'));
 assert.ok(ctx.getProcedure('print'));
 assert.ok(ctx.getProcedure('type'));
+assert.ok(ctx.getProcedure('show'));
 assert.ok(ctx.getProcedure('if'));
 assert.ok(ctx.getProcedure('ifalse'));
 assert.ok(ctx.getProcedure('ifelse'));
@@ -257,7 +258,7 @@ assert.equal('y', result.argnames[1]);
 
 assert.equal(3, ajlogo.evaluateText('sumxy 1 2'));
 
-// Print and Type
+// print, type, show
 
 var output = '';
 
@@ -276,6 +277,14 @@ assert.equal('1 2 3', output);
 output = '';
 ajlogo.evaluateText('print [1 2 3]');
 assert.equal('1 2 3\r\n', output);
+
+output = '';
+ajlogo.evaluateText('show [1 2 3]');
+assert.equal('[ 1 2 3 ]\r\n', output);
+
+output = '';
+ajlogo.evaluateText('show []');
+assert.equal('[  ]\r\n', output);
 
 // If and variants
 
