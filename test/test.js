@@ -110,6 +110,13 @@ assert.equal(2, result.length);
 assert.ok(result[1] instanceof Array);
 assert.equal(3, result[1].length);
 
+// True and false
+
+result = ajlogo.compileText('true false');
+assert.equal(2, result.length);
+assert.ok(true === result[0]);
+assert.ok(false === result[1]);
+
 // Primitives
 
 assert.ok(ctx.getProcedure('add'));
