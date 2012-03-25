@@ -186,6 +186,12 @@ assert.ok(ctx.getProcedure('tan'));
 assert.ok(ctx.getProcedure('radsin'));
 assert.ok(ctx.getProcedure('radcos'));
 assert.ok(ctx.getProcedure('radtan'));
+assert.ok(ctx.getProcedure('arctan'));
+assert.ok(ctx.getProcedure('arcsin'));
+assert.ok(ctx.getProcedure('arccos'));
+assert.ok(ctx.getProcedure('radarctan'));
+assert.ok(ctx.getProcedure('radarcsin'));
+assert.ok(ctx.getProcedure('radarccos'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -282,6 +288,10 @@ assert.equal(1, ctx.getVariable('testvar'));
 
 ajlogo.evaluateText('run [make "testrun 1 stop make "testrun 2]');
 assert.equal(1, ctx.getVariable('testrun'));
+
+output = '';
+ajlogo.evaluateText('run [print [hello world]]');
+assert.equal('hello world\r\n', output);
 
 // runresult
 
@@ -389,4 +399,22 @@ assert.equal(0, ajlogo.evaluateText('tan 0'));
 result = ajlogo.evaluateText('radtan '+ (Math.PI/4));
 assert.ok( 0.99999999 <= result && result <= 1.000001);
 assert.equal(0, ajlogo.evaluateText('radtan 0'));
+
+result = ajlogo.evaluateText('radarctan 1') - Math.PI/4;
+assert.ok( -0.00000001 <= result && result <= 0.00000001);
+
+result = ajlogo.evaluateText('arctan 1') - 45;
+assert.ok( -0.00000001 <= result && result <= 0.00000001);
+
+result = ajlogo.evaluateText('radarccos 1');
+assert.ok( -0.00000001 <= result && result <= 0.00000001);
+
+result = ajlogo.evaluateText('arccos 1');
+assert.ok( -0.00000001 <= result && result <= 0.00000001);
+
+result = ajlogo.evaluateText('radarcsin 0');
+assert.ok( -0.00000001 <= result && result <= 0.00000001);
+
+result = ajlogo.evaluateText('arcsin 0');
+assert.ok( -0.00000001 <= result && result <= 0.00000001);
 
