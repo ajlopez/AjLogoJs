@@ -224,6 +224,10 @@ assert.ok(ctx.getProcedure('find'));
 assert.ok(ctx.getProcedure('reduce'));
 assert.ok(ctx.getProcedure('list'));
 assert.ok(ctx.getProcedure('sentence'));
+assert.ok(ctx.getProcedure('word'));
+assert.ok(ctx.getProcedure('fput'));
+assert.ok(ctx.getProcedure('lput'));
+assert.ok(ctx.getProcedure('combine'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -695,3 +699,27 @@ assert.equal('[ 1 2 2 3 ]\r\n', output);
 output = '';
 ajlogo.evaluateText('show sentence [1 2] 3');
 assert.equal('[ 1 2 3 ]\r\n', output);
+
+// word, fput, lput, combine
+
+assert.equal("a b", ajlogo.evaluateText('word "a "b'));
+
+result = ajlogo.evaluateText('fput "a [b]');
+assert.ok(result instanceof Array);
+assert.equal('a', result[0]);
+assert.equal('b', result[1]);
+
+result = ajlogo.evaluateText('lput "a [b]');
+assert.ok(result instanceof Array);
+assert.equal('b', result[0]);
+assert.equal('a', result[1]);
+
+result = ajlogo.evaluateText('combine "a [b]');
+assert.ok(result instanceof Array);
+assert.equal('a', result[0]);
+assert.equal('b', result[1]);
+
+result = ajlogo.evaluateText('combine "a "b');
+assert.equal('a b', result);
+
+
