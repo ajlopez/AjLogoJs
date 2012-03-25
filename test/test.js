@@ -194,6 +194,8 @@ assert.ok(ctx.getProcedure('radarcsin'));
 assert.ok(ctx.getProcedure('radarccos'));
 assert.ok(ctx.getProcedure('iseq'));
 assert.ok(ctx.getProcedure('rseq'));
+assert.ok(ctx.getProcedure('repeat'));
+assert.ok(ctx.getProcedure('forever'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -448,3 +450,18 @@ assert.equal(3, result.length);
 assert.equal(1, result[0]);
 assert.equal(0, result[1]);
 assert.equal(-1, result[2]);
+
+// repeat, forever
+
+output = ''
+ajlogo.evaluateText('repeat 4 [type 1]');
+assert.equal('1111', output);
+
+output = ''
+ajlogo.evaluateText('forever [type 1 stop]');
+assert.equal('1', output);
+
+output = ''
+ajlogo.evaluateText('make "a 10 forever [make "a difference :a 1 test :a iffalse [stop]]');
+assert.equal(0, ctx.getVariable('a'));
+
