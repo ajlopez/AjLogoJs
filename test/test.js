@@ -213,6 +213,7 @@ assert.ok(ctx.getProcedure('equalp'));
 assert.ok(ctx.getProcedure('notequalp'));
 assert.ok(ctx.getProcedure('emptyp'));
 assert.ok(ctx.getProcedure('beforep'));
+assert.ok(ctx.getProcedure('memberp'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -598,4 +599,15 @@ assert.ok(ajlogo.evaluateText('beforep 123 2'));
 assert.ok(ajlogo.evaluateText('beforep "a "b'));
 assert.ok(!ajlogo.evaluateText('beforep 2 123'));
 assert.ok(!ajlogo.evaluateText('beforep "b "b'));
+
+// memberp
+
+assert.ok(ajlogo.evaluateText('memberp 1 [1 2 3]'));
+assert.ok(ajlogo.evaluateText('memberp 2 [1 2 3]'));
+assert.ok(ajlogo.evaluateText('memberp 3 [1 2 3]'));
+assert.ok(ajlogo.evaluateText('memberp [2 3] [1 [2 3] 4]'));
+
+assert.ok(!ajlogo.evaluateText('memberp 4 [1 2 3]'));
+assert.ok(!ajlogo.evaluateText('memberp "a [1 2 3]'));
+assert.ok(!ajlogo.evaluateText('memberp [2 3 4] [1 [2 3] 4]'));
 
