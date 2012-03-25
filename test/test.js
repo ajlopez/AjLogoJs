@@ -203,6 +203,7 @@ assert.ok(ctx.getProcedure('while'));
 assert.ok(ctx.getProcedure('until'));
 assert.ok(ctx.getProcedure('apply'));
 assert.ok(ctx.getProcedure('invoke'));
+assert.ok(ctx.getProcedure('foreach'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -514,7 +515,7 @@ output = ''
 ajlogo.evaluateText('make "a 0 to dox until :a [ type :a stop] type "end end dox');
 assert.equal('0', output);
 
-// apply, invoke
+// apply, invoke, foreach
 
 assert.equal(3, ajlogo.evaluateText('apply "sum [1 2]'));
 assert.equal(-1, ajlogo.evaluateText('apply "difference [1 2]'));
@@ -522,4 +523,8 @@ assert.equal(-1, ajlogo.evaluateText('apply "difference [1 2]'));
 output = '';
 ajlogo.evaluateText('invoke "type 1');
 assert.equal('1', output);
+
+output = '';
+ajlogo.evaluateText('foreach "type [1 2 3 4]');
+assert.equal('1234', output);
 
