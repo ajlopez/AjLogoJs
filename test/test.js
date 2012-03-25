@@ -222,6 +222,8 @@ assert.ok(ctx.getProcedure('char'));
 assert.ok(ctx.getProcedure('filter'));
 assert.ok(ctx.getProcedure('find'));
 assert.ok(ctx.getProcedure('reduce'));
+assert.ok(ctx.getProcedure('list'));
+assert.ok(ctx.getProcedure('sentence'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -281,6 +283,10 @@ assert.equal('1 2 3\r\n', output);
 output = '';
 ajlogo.evaluateText('show [1 2 3]');
 assert.equal('[ 1 2 3 ]\r\n', output);
+
+output = '';
+ajlogo.evaluateText('show [1 [2 3] 4]');
+assert.equal('[ 1 [ 2 3 ] 4 ]\r\n', output);
 
 output = '';
 ajlogo.evaluateText('show []');
@@ -663,3 +669,29 @@ assert.equal(0, result.length);
 
 assert.equal(10, ajlogo.evaluateText('reduce "sum [1 2 3 4]'));
 assert.equal(10, ajlogo.evaluateText('to mysum :x :y output sum :x :y end reduce "mysum [1 2 3 4]'));
+
+// list, sentence
+
+output = '';
+ajlogo.evaluateText('show list 1 2');
+assert.equal('[ 1 2 ]\r\n', output);
+
+output = '';
+ajlogo.evaluateText('show list 1 [2]');
+assert.equal('[ 1 [ 2 ] ]\r\n', output);
+
+output = '';
+ajlogo.evaluateText('show sentence 1 2');
+assert.equal('[ 1 2 ]\r\n', output);
+
+output = '';
+ajlogo.evaluateText('show sentence 1 [2 3]');
+assert.equal('[ 1 2 3 ]\r\n', output);
+
+output = '';
+ajlogo.evaluateText('show sentence [1 2] [2 3]');
+assert.equal('[ 1 2 2 3 ]\r\n', output);
+
+output = '';
+ajlogo.evaluateText('show sentence [1 2] 3');
+assert.equal('[ 1 2 3 ]\r\n', output);
