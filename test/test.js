@@ -170,6 +170,13 @@ assert.ok(ctx.getProcedure('quotient'));
 assert.ok(ctx.getProcedure('power'));
 assert.ok(ctx.getProcedure('remainder'));
 assert.ok(ctx.getProcedure('modulo'));
+assert.ok(ctx.getProcedure('minus'));
+assert.ok(ctx.getProcedure('abs'));
+assert.ok(ctx.getProcedure('int'));
+assert.ok(ctx.getProcedure('round'));
+assert.ok(ctx.getProcedure('floor'));
+assert.ok(ctx.getProcedure('ceil'));
+
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -312,4 +319,37 @@ assert.equal(-2, ajlogo.evaluateText('modulo 7 -5'));
 assert.equal(2, ajlogo.evaluateText('modulo -7 5'));
 assert.equal(-2, ajlogo.evaluateText('modulo -7 -5'));
 
+assert.equal(-3, ajlogo.evaluateText('minus 3'));
+assert.equal(3, ajlogo.evaluateText('minus -3'));
+
+assert.equal(3, ajlogo.evaluateText('abs 3'));
+assert.equal(3, ajlogo.evaluateText('abs -3'));
+
+assert.equal(3, ajlogo.evaluateText('round 3.4'));
+assert.equal(4, ajlogo.evaluateText('round 3.6'));
+assert.equal(4, ajlogo.evaluateText('round 3.5'));
+assert.equal(-3, ajlogo.evaluateText('round -3.4'));
+assert.equal(-4, ajlogo.evaluateText('round -3.6'));
+assert.equal(-3, ajlogo.evaluateText('round -3.5'));
+
+assert.equal(3, ajlogo.evaluateText('int 3.4'));
+assert.equal(3, ajlogo.evaluateText('int 3.6'));
+assert.equal(3, ajlogo.evaluateText('int 3.5'));
+assert.equal(-3, ajlogo.evaluateText('int -3.4'));
+assert.equal(-3, ajlogo.evaluateText('int -3.6'));
+assert.equal(-3, ajlogo.evaluateText('int -3.5'));
+
+assert.equal(3, ajlogo.evaluateText('floor 3.4'));
+assert.equal(3, ajlogo.evaluateText('floor 3.6'));
+assert.equal(3, ajlogo.evaluateText('floor 3.5'));
+assert.equal(-4, ajlogo.evaluateText('floor -3.4'));
+assert.equal(-4, ajlogo.evaluateText('floor -3.6'));
+assert.equal(-4, ajlogo.evaluateText('floor -3.5'));
+
+assert.equal(4, ajlogo.evaluateText('ceil 3.4'));
+assert.equal(4, ajlogo.evaluateText('ceil 3.6'));
+assert.equal(4, ajlogo.evaluateText('ceil 3.5'));
+assert.equal(-3, ajlogo.evaluateText('ceil -3.4'));
+assert.equal(-3, ajlogo.evaluateText('ceil -3.6'));
+assert.equal(-3, ajlogo.evaluateText('ceil -3.5'));
 
