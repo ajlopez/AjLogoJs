@@ -197,6 +197,8 @@ assert.ok(ctx.getProcedure('rseq'));
 assert.ok(ctx.getProcedure('repeat'));
 assert.ok(ctx.getProcedure('forever'));
 assert.ok(ctx.getProcedure('ignore'));
+assert.ok(ctx.getProcedure('for'));
+assert.ok(ctx.getProcedure('repcount'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -452,21 +454,39 @@ assert.equal(1, result[0]);
 assert.equal(0, result[1]);
 assert.equal(-1, result[2]);
 
-// repeat, forever
+// repeat, forever, repcount
 
-output = ''
+output = '';
 ajlogo.evaluateText('repeat 4 [type 1]');
 assert.equal('1111', output);
 
-output = ''
+output = '';
+ajlogo.evaluateText('repeat 4 [type repcount]');
+assert.equal('1234', output);
+
+output = '';
 ajlogo.evaluateText('forever [type 1 stop]');
 assert.equal('1', output);
 
-output = ''
+output = '';
+ajlogo.evaluateText('forever [type repcount stop]');
+assert.equal('1', output);
+
+output = '';
 ajlogo.evaluateText('make "a 10 forever [make "a difference :a 1 test :a iffalse [stop]]');
 assert.equal(0, ctx.getVariable('a'));
 
 // ignore
 
 assert.equal(null, ajlogo.evaluateText('ignore 2'));
+
+// for
+
+output = '';
+ajlogo.evaluateText('for [k 1 10] [type :k]');
+assert.equal('12345678910', output);
+
+output = '';
+ajlogo.evaluateText('for [k 1 10 2] [type :k]');
+assert.equal('13579', output);
 
