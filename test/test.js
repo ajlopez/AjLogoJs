@@ -59,6 +59,12 @@ assert.equal(1, list[0]);
 assert.equal(2, list[1]);
 assert.equal(3, list[2]);
 
+list = ajlogo.compileList([false, true]);
+assert.ok(list);
+assert.equal(2, list.length);
+assert.equal(false, list[0]);
+assert.equal(true, list[1]);
+
 list = ajlogo.compileList(['add', 1, 2]);
 assert.ok(list[0] instanceof ajlogo.ProcedureReference);
 assert.equal(3, (new ajlogo.CompositeExpression(list)).evaluate(ctx));
@@ -128,6 +134,9 @@ assert.ok(ctx.getProcedure('type'));
 assert.ok(ctx.getProcedure('if'));
 assert.ok(ctx.getProcedure('ifalse'));
 assert.ok(ctx.getProcedure('ifelse'));
+assert.ok(ctx.getProcedure('test'));
+assert.ok(ctx.getProcedure('iftrue'));
+assert.ok(ctx.getProcedure('iffalse'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -206,3 +215,11 @@ assert.equal(1, ajlogo.evaluateText('if true [1]'));
 assert.equal(null, ajlogo.evaluateText('if false [1]'));
 assert.equal(1, ajlogo.evaluateText('ifelse true [1] [2]'));
 assert.equal(2, ajlogo.evaluateText('ifelse false [1] [2]'));
+
+assert.equal(true, ajlogo.evaluateText('ifelse true [true] [false]'));
+
+ajlogo.evaluateText('test true iftrue [make "testresult true] iffalse [make "testresult false]');
+assert.equal(true, ctx.getVariable('testresult'));
+
+ajlogo.evaluateText('test false iftrue [make "testresult true] iffalse [make "testresult false]');
+assert.equal(false, ctx.getVariable('testresult'));
