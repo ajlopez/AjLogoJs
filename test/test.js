@@ -1,5 +1,7 @@
 
 var assert = require('assert');
+// Testing flag
+global.testing = true;
 var ajlogo = require('../lib/ajlogo.js');
 
 // Context
