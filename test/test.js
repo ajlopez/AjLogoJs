@@ -21,6 +21,24 @@ var newctx = new ajlogo.Context(ctx);
 assert.ok(ctx.getProcedure('make'));
 assert.ok(newctx.getProcedure('make'));
 
+ctx.setVariable('a', 1);
+newctx.setVariable('a', 2);
+
+assert.equal(2, ctx.getVariable('a'));
+assert.equal(2, newctx.getVariable('a'));
+
+ctx.setVariable('b', 1);
+newctx.defineVariable('b');
+newctx.setVariable('b', 2);
+
+assert.equal(1, ctx.getVariable('b'));
+assert.equal(2, newctx.getVariable('b'));
+
+newctx.setVariable('c', 3);
+
+assert.equal(3, ctx.getVariable('c'));
+assert.equal(3, newctx.getVariable('c'));
+
 // Evaluate Composite Expression
 
 var expression = new ajlogo.CompositeExpression([1, 2, 3]);
@@ -140,6 +158,8 @@ assert.ok(ctx.getProcedure('iftrue'));
 assert.ok(ctx.getProcedure('iffalse'));
 assert.ok(ctx.getProcedure('run'));
 assert.ok(ctx.getProcedure('runresult'));
+assert.ok(ctx.getProcedure('local'));
+assert.ok(ctx.getProcedure('localmake'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -252,5 +272,13 @@ assert.ok(result instanceof Array);
 assert.equal(1, result.length);
 assert.equal(2, result[0]);
 
+// local, make, localmake
 
+ajlogo.evaluateText('make "a 1 run [local "a make "a 2 make "b :a]');
+assert.equal(1, ctx.getVariable('a'));
+assert.equal(2, ctx.getVariable('b'));
+
+ajlogo.evaluateText('make "a 3 run [localmake "a 4 make "b :a]');
+assert.equal(3, ctx.getVariable('a'));
+assert.equal(4, ctx.getVariable('b'));
 
