@@ -212,6 +212,7 @@ assert.ok(ctx.getProcedure('wordp'));
 assert.ok(ctx.getProcedure('equalp'));
 assert.ok(ctx.getProcedure('notequalp'));
 assert.ok(ctx.getProcedure('emptyp'));
+assert.ok(ctx.getProcedure('beforep'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -590,4 +591,11 @@ assert.ok(!ajlogo.evaluateText('emptyp 1'));
 assert.ok(!ajlogo.evaluateText('emptyp [1 2]'));
 ctx.setVariable('empty', '');
 assert.ok(ajlogo.evaluateText('emptyp :empty'));
+
+// beforep
+
+assert.ok(ajlogo.evaluateText('beforep 123 2'));
+assert.ok(ajlogo.evaluateText('beforep "a "b'));
+assert.ok(!ajlogo.evaluateText('beforep 2 123'));
+assert.ok(!ajlogo.evaluateText('beforep "b "b'));
 
