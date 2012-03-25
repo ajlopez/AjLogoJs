@@ -118,6 +118,7 @@ assert.ok(ctx.getProcedure('word'));
 assert.ok(ctx.getProcedure('output'));
 assert.ok(ctx.getProcedure('print'));
 assert.ok(ctx.getProcedure('type'));
+assert.ok(ctx.getProcedure('if'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -173,4 +174,10 @@ assert.equal('1 2 3', output);
 output = '';
 ajlogo.evaluateText('print [1 2 3]');
 assert.equal('1 2 3\r\n', output);
+
+// If
+
+ctx.setVariable('ifone', 0);
+ajlogo.evaluateText('if 1 [make "ifone 1]');
+assert.equal(1, ctx.getVariable('ifone'));
 
