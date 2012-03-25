@@ -23,7 +23,6 @@ exports.loadModule = function(filePath, mocks) {
     return path.resolve(path.dirname(filePath), module);
   };
 
-  var exports = {};
   var context = {
     require: function(name) {
       return mocks[name] || require(resolveModule(name));
@@ -31,7 +30,9 @@ exports.loadModule = function(filePath, mocks) {
     console: console,
     exports: exports,
     module: {
-      exports: exports
+	// My change: a testing property
+		testing: true,
+		exports: exports
     }
   };
 
