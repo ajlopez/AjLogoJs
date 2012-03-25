@@ -215,6 +215,7 @@ assert.ok(ctx.getProcedure('emptyp'));
 assert.ok(ctx.getProcedure('beforep'));
 assert.ok(ctx.getProcedure('memberp'));
 assert.ok(ctx.getProcedure('substringp'));
+assert.ok(ctx.getProcedure('count'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -618,4 +619,9 @@ assert.ok(ajlogo.evaluateText('substringp "a "adam'));
 assert.ok(ajlogo.evaluateText('substringp "oo "foo'));
 assert.ok(!ajlogo.evaluateText('substringp "o "adam'));
 assert.ok(!ajlogo.evaluateText('substringp "aa "foo'));
+
+// count
+
+assert.equal(3, ajlogo.evaluateText('count [3 4 5]'));
+assert.equal(3, ajlogo.evaluateText('count "foo'));
 
