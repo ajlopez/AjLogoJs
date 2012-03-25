@@ -204,6 +204,7 @@ assert.ok(ctx.getProcedure('until'));
 assert.ok(ctx.getProcedure('apply'));
 assert.ok(ctx.getProcedure('invoke'));
 assert.ok(ctx.getProcedure('foreach'));
+assert.ok(ctx.getProcedure('map'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -515,16 +516,30 @@ output = ''
 ajlogo.evaluateText('make "a 0 to dox until :a [ type :a stop] type "end end dox');
 assert.equal('0', output);
 
-// apply, invoke, foreach
+// apply, invoke, foreach, map
 
 assert.equal(3, ajlogo.evaluateText('apply "sum [1 2]'));
 assert.equal(-1, ajlogo.evaluateText('apply "difference [1 2]'));
+assert.equal(3, ajlogo.evaluateText('to mysum :x :y output sum :x :y end apply "mysum [1 2]'));
+assert.equal(-1, ajlogo.evaluateText('to mydiff :x :y output difference :x :y end apply "mydiff [1 2]'));
 
 output = '';
 ajlogo.evaluateText('invoke "type 1');
 assert.equal('1', output);
 
 output = '';
+ajlogo.evaluateText('to mytype :x type :x end invoke "mytype 1');
+assert.equal('1', output);
+
+output = '';
 ajlogo.evaluateText('foreach "type [1 2 3 4]');
 assert.equal('1234', output);
+
+output = '';
+ajlogo.evaluateText('to mytype :x type :x end foreach "mytype [1 2 3 4]');
+assert.equal('1234', output);
+
+output = '';
+ajlogo.evaluateText('to inc :x output sum :x 1 end type map "inc [1 2 3]');
+assert.equal('2 3 4', output);
 
