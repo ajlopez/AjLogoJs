@@ -206,6 +206,9 @@ assert.ok(ctx.getProcedure('invoke'));
 assert.ok(ctx.getProcedure('foreach'));
 assert.ok(ctx.getProcedure('map'));
 assert.ok(ctx.getProcedure('thing'));
+assert.ok(ctx.getProcedure('numberp'));
+assert.ok(ctx.getProcedure('listp'));
+assert.ok(ctx.getProcedure('wordp'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -547,4 +550,13 @@ assert.equal('2 3 4', output);
 // thing
 
 assert.equal(1, ajlogo.evaluateText('make "a 1 thing "a'));
+
+// wordp, listp, numberp
+
+assert.ok(ajlogo.evaluateText('numberp 1'));
+assert.ok(ajlogo.evaluateText('wordp "foo'));
+assert.ok(ajlogo.evaluateText('listp [1 2 3]'));
+assert.ok(!ajlogo.evaluateText('numberp "foo'));
+assert.ok(!ajlogo.evaluateText('wordp [1 2 3]'));
+assert.ok(!ajlogo.evaluateText('listp 1'));
 
