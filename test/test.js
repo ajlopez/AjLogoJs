@@ -218,6 +218,7 @@ assert.ok(ctx.getProcedure('substringp'));
 assert.ok(ctx.getProcedure('count'));
 assert.ok(ctx.getProcedure('ascii'));
 assert.ok(ctx.getProcedure('char'));
+assert.ok(ctx.getProcedure('filter'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -631,4 +632,10 @@ assert.equal(3, ajlogo.evaluateText('count "foo'));
 
 assert.equal(97, ajlogo.evaluateText('ascii "adam'));
 assert.equal("a", ajlogo.evaluateText('char 97'));
+
+// filter
+
+output = '';
+ajlogo.evaluateText('to oddp :x output remainder :x 2 end type filter "oddp [1 2 3 4]');
+assert.equal('1 3', output);
 
