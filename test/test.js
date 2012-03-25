@@ -214,6 +214,7 @@ assert.ok(ctx.getProcedure('notequalp'));
 assert.ok(ctx.getProcedure('emptyp'));
 assert.ok(ctx.getProcedure('beforep'));
 assert.ok(ctx.getProcedure('memberp'));
+assert.ok(ctx.getProcedure('substringp'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -610,4 +611,11 @@ assert.ok(ajlogo.evaluateText('memberp [2 3] [1 [2 3] 4]'));
 assert.ok(!ajlogo.evaluateText('memberp 4 [1 2 3]'));
 assert.ok(!ajlogo.evaluateText('memberp "a [1 2 3]'));
 assert.ok(!ajlogo.evaluateText('memberp [2 3 4] [1 [2 3] 4]'));
+
+// substringp
+
+assert.ok(ajlogo.evaluateText('substringp "a "adam'));
+assert.ok(ajlogo.evaluateText('substringp "oo "foo'));
+assert.ok(!ajlogo.evaluateText('substringp "o "adam'));
+assert.ok(!ajlogo.evaluateText('substringp "aa "foo'));
 
