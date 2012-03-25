@@ -129,6 +129,7 @@ assert.ok(ctx.getProcedure('add'));
 assert.ok(ctx.getProcedure('make'));
 assert.ok(ctx.getProcedure('word'));
 assert.ok(ctx.getProcedure('output'));
+assert.ok(ctx.getProcedure('stop'));
 assert.ok(ctx.getProcedure('print'));
 assert.ok(ctx.getProcedure('type'));
 assert.ok(ctx.getProcedure('if'));
@@ -137,6 +138,8 @@ assert.ok(ctx.getProcedure('ifelse'));
 assert.ok(ctx.getProcedure('test'));
 assert.ok(ctx.getProcedure('iftrue'));
 assert.ok(ctx.getProcedure('iffalse'));
+assert.ok(ctx.getProcedure('run'));
+assert.ok(ctx.getProcedure('runresult'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -223,3 +226,31 @@ assert.equal(true, ctx.getVariable('testresult'));
 
 ajlogo.evaluateText('test false iftrue [make "testresult true] iffalse [make "testresult false]');
 assert.equal(false, ctx.getVariable('testresult'));
+
+// stop
+
+ajlogo.evaluateText('if true [make "testvar 1 stop make "testvar 2]');
+assert.equal(1, ctx.getVariable('testvar'));
+
+// run
+
+ajlogo.evaluateText('run [make "testrun 1 stop make "testrun 2]');
+assert.equal(1, ctx.getVariable('testrun'));
+
+// runresult
+
+result = ajlogo.evaluateText('runresult [make "testrun 1 stop make "testrun 2]');
+assert.ok(result instanceof Array);
+assert.equal(0, result.length);
+
+result = ajlogo.evaluateText('runresult [make "testrun 1 stop make "testrun 2]');
+assert.ok(result instanceof Array);
+assert.equal(0, result.length);
+
+result = ajlogo.evaluateText('runresult [make "testrun 1 output 2 make "testrun 2]');
+assert.ok(result instanceof Array);
+assert.equal(1, result.length);
+assert.equal(2, result[0]);
+
+
+
