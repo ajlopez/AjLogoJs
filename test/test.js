@@ -127,6 +127,7 @@ assert.ok(ctx.getProcedure('print'));
 assert.ok(ctx.getProcedure('type'));
 assert.ok(ctx.getProcedure('if'));
 assert.ok(ctx.getProcedure('ifalse'));
+assert.ok(ctx.getProcedure('ifelse'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -193,6 +194,15 @@ assert.equal(1, ctx.getVariable('ifone'));
 
 ajlogo.evaluateText('ifalse 0 [make "iftwo 2]');
 assert.equal(2, ctx.getVariable('iftwo'));
+ajlogo.evaluateText('ifalse false [make "ifthree 3]');
+assert.equal(3, ctx.getVariable('ifthree'));
 
 ajlogo.evaluateText('ifalse 1 [make "iftwo 3]');
 assert.equal(2, ctx.getVariable('iftwo'));
+ajlogo.evaluateText('ifalse true [make "iftwo 4]');
+assert.equal(2, ctx.getVariable('iftwo'));
+
+assert.equal(1, ajlogo.evaluateText('if true [1]'));
+assert.equal(null, ajlogo.evaluateText('if false [1]'));
+assert.equal(1, ajlogo.evaluateText('ifelse true [1] [2]'));
+assert.equal(2, ajlogo.evaluateText('ifelse false [1] [2]'));
