@@ -103,6 +103,9 @@ assert.equal(3, ajlogo.evaluateList(['sum',':one',':two'], ctx));
 
 // Compile text
 
+assert.equal(1, ajlogo.compileText('1')[0]);
+assert.equal(-1, ajlogo.compileText('-1')[0]);
+
 result = ajlogo.compileText("sum");
 assert.ok(result);
 assert.equal(1, result.length);
@@ -164,6 +167,9 @@ assert.ok(ctx.getProcedure('sum'));
 assert.ok(ctx.getProcedure('difference'));
 assert.ok(ctx.getProcedure('product'));
 assert.ok(ctx.getProcedure('quotient'));
+assert.ok(ctx.getProcedure('power'));
+assert.ok(ctx.getProcedure('remainder'));
+assert.ok(ctx.getProcedure('modulo'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -292,4 +298,18 @@ assert.equal(3, ajlogo.evaluateText('sum 1 2'));
 assert.equal(-1, ajlogo.evaluateText('difference 1 2'));
 assert.equal(6, ajlogo.evaluateText('product 2 3'));
 assert.equal(2, ajlogo.evaluateText('quotient 6 3'));
+
+assert.equal(9, ajlogo.evaluateText('power 3 2'));
+assert.equal(8, ajlogo.evaluateText('power 2 3'));
+
+assert.equal(2, ajlogo.evaluateText('remainder 7 5'));
+assert.equal(2, ajlogo.evaluateText('remainder 7 -5'));
+assert.equal(-2, ajlogo.evaluateText('remainder -7 5'));
+assert.equal(-2, ajlogo.evaluateText('remainder -7 -5'));
+
+assert.equal(2, ajlogo.evaluateText('modulo 7 5'));
+assert.equal(-2, ajlogo.evaluateText('modulo 7 -5'));
+assert.equal(2, ajlogo.evaluateText('modulo -7 5'));
+assert.equal(-2, ajlogo.evaluateText('modulo -7 -5'));
+
 
