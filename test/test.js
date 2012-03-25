@@ -220,6 +220,7 @@ assert.ok(ctx.getProcedure('ascii'));
 assert.ok(ctx.getProcedure('char'));
 assert.ok(ctx.getProcedure('filter'));
 assert.ok(ctx.getProcedure('find'));
+assert.ok(ctx.getProcedure('reduce'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -649,3 +650,7 @@ result = ajlogo.evaluateText('to oddp :x output remainder :x 2 end find "oddp [2
 assert.ok(result instanceof Array);
 assert.equal(0, result.length);
 
+// reduce
+
+assert.equal(10, ajlogo.evaluateText('reduce "sum [1 2 3 4]'));
+assert.equal(10, ajlogo.evaluateText('to mysum :x :y output sum :x :y end reduce "mysum [1 2 3 4]'));
