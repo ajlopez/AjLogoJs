@@ -176,7 +176,10 @@ assert.ok(ctx.getProcedure('int'));
 assert.ok(ctx.getProcedure('round'));
 assert.ok(ctx.getProcedure('floor'));
 assert.ok(ctx.getProcedure('ceil'));
-
+assert.ok(ctx.getProcedure('sqrt'));
+assert.ok(ctx.getProcedure('exp'));
+assert.ok(ctx.getProcedure('log10'));
+assert.ok(ctx.getProcedure('ln'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -352,4 +355,13 @@ assert.equal(4, ajlogo.evaluateText('ceil 3.5'));
 assert.equal(-3, ajlogo.evaluateText('ceil -3.4'));
 assert.equal(-3, ajlogo.evaluateText('ceil -3.6'));
 assert.equal(-3, ajlogo.evaluateText('ceil -3.5'));
+
+assert.equal(2, ajlogo.evaluateText('sqrt 4'));
+assert.equal(Math.sqrt(5), ajlogo.evaluateText('sqrt 5'));
+assert.equal(1, ajlogo.evaluateText('log10 10'));
+assert.equal(2, ajlogo.evaluateText('log10 100'));
+assert.equal(Math.E, ajlogo.evaluateText('exp 1'));
+assert.equal(Math.log(10), ajlogo.evaluateText('ln 10'));
+
+
 
