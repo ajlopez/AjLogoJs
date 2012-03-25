@@ -205,6 +205,7 @@ assert.ok(ctx.getProcedure('apply'));
 assert.ok(ctx.getProcedure('invoke'));
 assert.ok(ctx.getProcedure('foreach'));
 assert.ok(ctx.getProcedure('map'));
+assert.ok(ctx.getProcedure('thing'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -542,4 +543,8 @@ assert.equal('1234', output);
 output = '';
 ajlogo.evaluateText('to inc :x output sum :x 1 end type map "inc [1 2 3]');
 assert.equal('2 3 4', output);
+
+// thing
+
+assert.equal(1, ajlogo.evaluateText('make "a 1 thing "a'));
 
