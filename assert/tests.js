@@ -238,6 +238,11 @@ assert.ok(ctx.getProcedure('pos'));
 assert.ok(ctx.getProcedure('xcor'));
 assert.ok(ctx.getProcedure('ycor'));
 assert.ok(ctx.getProcedure('heading'));
+assert.ok(ctx.getProcedure('setheading'));
+assert.ok(ctx.getProcedure('setx'));
+assert.ok(ctx.getProcedure('sety'));
+assert.ok(ctx.getProcedure('setxy'));
+assert.ok(ctx.getProcedure('setpos'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -777,3 +782,28 @@ assert.equal(0, ajlogo.Turtle.y);
 assert.equal(0, ajlogo.evaluateText('xcor'));
 assert.equal(0, ajlogo.evaluateText('ycor'));
 assert.equal(0, ajlogo.evaluateText('heading'));
+
+// pos
+
+result = ajlogo.evaluateText('pos');
+assert.equal(2, result.length);
+assert.equal(0, result[0]);
+assert.equal(0, result[1]);
+
+// setheading, setx, sety, setxy, setpos
+
+ajlogo.evaluateText('home');
+ajlogo.evaluateText('setx 10');
+assert.equal(10, ajlogo.Turtle.x);
+ajlogo.evaluateText('sety 20');
+assert.equal(20, ajlogo.Turtle.y);
+ajlogo.evaluateText('setheading 90');
+assert.equal(180, ajlogo.Turtle.degrees);
+ajlogo.evaluateText('setxy 20 30');
+assert.equal(20, ajlogo.Turtle.x);
+assert.equal(30, ajlogo.Turtle.y);
+ajlogo.evaluateText('setpos [30 40]');
+assert.equal(30, ajlogo.Turtle.x);
+assert.equal(40, ajlogo.Turtle.y);
+
+
