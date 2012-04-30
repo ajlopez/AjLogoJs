@@ -4,7 +4,7 @@
  <script type="text/javascript">
 
 ajlogo.registerOutput(function(value) { 
-	document.getElementById("outputField").innerHTML += value; 
+	document.getElementById("outputField").value += value; 
 });
 
  function doInput()
@@ -16,8 +16,10 @@ ajlogo.registerOutput(function(value) {
  function showExample(name)
  {
 	var example = document.getElementById(name).innerHTML;
-	document.getElementById("inputField").innerHTML = example;
+	document.getElementById("inputField").value = example;
  }
+ 
+ 
  </script>
  <style>
  .example {
@@ -30,28 +32,84 @@ ajlogo.registerOutput(function(value) {
 <table style="width: 100%">
 <tr>
 <td style="width: 50%; vertical-align: top;">
-<textarea style="width: 100%" rows="10" id="inputField">
-</textarea>
+<textarea style="width: 100%" rows="12" id="inputField"></textarea>
 <br />
 <input type="button" onclick="doInput()" value="Run"></input>
 </td>
 <td style="width: 50%; vertical-align: top;">
-<textarea style="width: 100%" rows="10" id="outputField">
-</textarea>
+<textarea style="width: 100%" rows="12" id="outputField"></textarea>
 </td>
 </tr>
-</table>
-
+<tr>
+<td valign="top">
 <h2>Examples</h2>
 <ul>
 	<li>
 		<a href='#' onclick='showExample("printhello")'>Hello</a>
+	</li>
+	<li>
+		<a href='#' onclick='showExample("square")'>Square</a>
+	</li>
+	<li>
+		<a href='#' onclick='showExample("figure")'>Simple Figure</a>
 	</li>
 </ul>
 
 <div id='printhello' class='example'>
 print [Hello World]
 </div>
+<div id='square' class='example'>
+forward 40 left 90
+forward 40 left 90
+forward 40 left 90
+forward 40 left 90
+</div>
+<div id='figure' class='example'>
+to square :side
+	repeat 4 [ forward :side left 90 ]
+end
+
+to figure
+	repeat 36 [ square 40 left 10 ]
+end
+
+figure
+</div>
+</td>
+<td valign="top">
+<canvas id="canvas" width="300" height="300">
+</canvas>
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+	var canvas = document.getElementById('canvas');
+	var context = canvas.getContext("2d");
+	context.strokeStyle = "black";
+	context.lineJoin = "round";
+	context.lineWidth = 0.2;
+	var xoffset = 150;
+	var yoffset = 150;
+	var canvasx = xoffset;
+	var canvasy = yoffset;
+
+	context.beginPath();
+	context.moveTo(canvasx, canvasy);
+	context.closePath();
+	
+	ajlogo.Turtle.onMove(onMove);
+
+	function onMove(x, y) {
+		context.beginPath();
+		context.moveTo(canvasx, canvasy);
+		canvasx = xoffset + x;
+		canvasy = xoffset - y;
+		context.lineTo(canvasx, canvasy);
+		context.closePath();
+		context.stroke();
+	};
+</script>
 
 </body>
 </html>

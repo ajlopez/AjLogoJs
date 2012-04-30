@@ -229,6 +229,15 @@ assert.ok(ctx.getProcedure('fput'));
 assert.ok(ctx.getProcedure('lput'));
 assert.ok(ctx.getProcedure('combine'));
 assert.ok(ctx.getProcedure('to'));
+assert.ok(ctx.getProcedure('forward'));
+assert.ok(ctx.getProcedure('backward'));
+assert.ok(ctx.getProcedure('left'));
+assert.ok(ctx.getProcedure('right'));
+assert.ok(ctx.getProcedure('home'));
+assert.ok(ctx.getProcedure('pos'));
+assert.ok(ctx.getProcedure('xcor'));
+assert.ok(ctx.getProcedure('ycor'));
+assert.ok(ctx.getProcedure('heading'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -721,4 +730,50 @@ assert.equal('b', result[1]);
 result = ajlogo.evaluateText('combine "a "b');
 assert.equal('a b', result);
 
+// Turtle
 
+result = assert.ok(ajlogo.Turtle);
+
+// forward
+
+result = ajlogo.evaluateText('forward 100');
+assert.equal(null, result);
+assert.equal(100, ajlogo.Turtle.y);
+assert.equal(0, ajlogo.Turtle.x);
+
+// backward
+
+result = ajlogo.evaluateText('backward 100');
+assert.equal(null, result);
+assert.equal(0, ajlogo.Turtle.y);
+assert.equal(0, ajlogo.Turtle.x);
+
+// left
+
+result = ajlogo.evaluateText('left 90');
+assert.equal(null, result);
+assert.equal(180, ajlogo.Turtle.degrees);
+
+// and forward
+
+result = ajlogo.evaluateText('forward 100');
+assert.equal(null, result);
+assert.equal(0, ajlogo.Turtle.y);
+assert.equal(-100, ajlogo.Turtle.x);
+
+// right
+
+result = ajlogo.evaluateText('right 90');
+assert.equal(null, result);
+assert.equal(90, ajlogo.Turtle.degrees);
+
+// home, xcor, ycor, heading
+
+result = ajlogo.evaluateText('home');
+assert.equal(null, result);
+assert.equal(90, ajlogo.Turtle.degrees);
+assert.equal(0, ajlogo.Turtle.x);
+assert.equal(0, ajlogo.Turtle.y);
+assert.equal(0, ajlogo.evaluateText('xcor'));
+assert.equal(0, ajlogo.evaluateText('ycor'));
+assert.equal(0, ajlogo.evaluateText('heading'));
