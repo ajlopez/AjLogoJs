@@ -228,6 +228,7 @@ assert.ok(ctx.getProcedure('word'));
 assert.ok(ctx.getProcedure('fput'));
 assert.ok(ctx.getProcedure('lput'));
 assert.ok(ctx.getProcedure('combine'));
+assert.ok(ctx.getProcedure('to'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);
@@ -242,8 +243,6 @@ assert.equal(3, ajlogo.evaluateText('sum 1 2'));
 assert.equal(null, ajlogo.evaluateText('make "four 3', ctx));
 
 // To
-
-assert.ok(ctx.getProcedure('to'));
 
 ajlogo.evaluateText('to setfoo make "foo "newbar end');
 result = ctx.getProcedure('setfoo');
