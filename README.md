@@ -16,3 +16,20 @@ In Windows, you have a command file:
 tests.cmd
 ```
 
+## NodeUnit Tests
+
+Install NodeUnit using npm from project folder
+
+```
+npm install nodeunit
+```
+
+Then run all tests in test folder
+
+```
+nodeunit test
+```
+
+(In Windows, there is a nodeunit.cmd that calls the nodeunit script)
+
+
