@@ -243,6 +243,8 @@ assert.ok(ctx.getProcedure('setx'));
 assert.ok(ctx.getProcedure('sety'));
 assert.ok(ctx.getProcedure('setxy'));
 assert.ok(ctx.getProcedure('setpos'));
+assert.ok(ctx.getProcedure('penup'));
+assert.ok(ctx.getProcedure('pendown'));
 
 result = ajlogo.compileText('make "three 3');
 (new ajlogo.CompositeExpression(result)).evaluate(ctx);

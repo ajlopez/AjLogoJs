@@ -53,6 +53,12 @@ ajlogo.registerOutput(function(value) {
 	<li>
 		<a href='#' onclick='showExample("figure")'>Simple Figure</a>
 	</li>
+	<li>
+		<a href='#' onclick='showExample("circle")'>Simple Circle</a>
+	</li>
+	<li>
+		<a href='#' onclick='showExample("rotated")'>Rotated Figure</a>
+	</li>
 </ul>
 
 <div id='printhello' class='example'>
@@ -73,7 +79,21 @@ to figure
 	repeat 36 [ square 40 left 10 ]
 end
 
-figure
+home figure
+</div>
+<div id='circle' class='example'>
+home
+repeat 72 [ forward 5 left 5 ]
+</div>
+<div id='rotated' class='example'>
+to figure
+	right 45
+	repeat 4 [ forward 40 left 90 ]
+	left 45
+end
+home
+penup forward 50 pendown
+repeat 72 [figure left 95 forward 5 right 90]
 </div>
 </td>
 <td valign="top">
@@ -93,14 +113,23 @@ figure
 	var yoffset = 150;
 	var canvasx = xoffset;
 	var canvasy = yoffset;
+	var canvaspen = true;
 
 	context.beginPath();
 	context.moveTo(canvasx, canvasy);
 	context.closePath();
 	
 	ajlogo.Turtle.onMove(onMove);
+	ajlogo.Turtle.onPen(onPen);
 
 	function onMove(x, y) {
+		if (!canvaspen)
+		{
+			canvasx = xoffset + x;
+			canvasy = xoffset - y;
+			return;
+		}
+		
 		context.beginPath();
 		context.moveTo(canvasx, canvasy);
 		canvasx = xoffset + x;
@@ -108,6 +137,10 @@ figure
 		context.lineTo(canvasx, canvasy);
 		context.closePath();
 		context.stroke();
+	};
+
+	function onPen(pen) {
+		canvaspen = pen;
 	};
 </script>
 
