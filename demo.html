@@ -11,12 +11,152 @@
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-  </head>
-  <body>
-        <h1>AjLogoJs Demo</h1>
+	<script src="ajlogo.js" type="text/javascript"></script>
+	<script type="text/javascript">
 
-<p>AjLogoJs is a Logo Programming Language interpreter written in Javascript, that can run at server side (using Node.js) or at browser</p>
+		ajlogo.registerOutput(function(value) { 
+			document.getElementById("outputField").value += value; 
+		});
 
+		 function doInput()
+		 {
+			var text = document.getElementById("inputField").value;
+			ajlogo.evaluateText(text);
+		 }
+		 
+		 function showExample(name)
+		 {
+			var example = document.getElementById(name).innerHTML;
+			document.getElementById("inputField").value = example;
+		 }
+		 
+		 
+	</script>
+	 <style>
+	 .example {
+		display: none;
+	 }
+	 </style>
+</head>
+<body>
+<h1>AjLogo in Javascript</h1>
+<div>
+Back to <a href="index.html">home</a>
+</div>
+<table style="width: 100%">
+<tr>
+<td style="width: 50%; vertical-align: top;">
+<textarea style="width: 100%" rows="12" id="inputField"></textarea>
+<br />
+<input type="button" onclick="doInput()" value="Run"></input>
+</td>
+<td style="width: 50%; vertical-align: top;">
+<textarea style="width: 100%" rows="12" id="outputField"></textarea>
+</td>
+</tr>
+<tr>
+<td valign="top">
+<h2>Examples</h2>
+<ul>
+	<li>
+		<a href='#' onclick='showExample("printhello")'>Hello</a>
+	</li>
+	<li>
+		<a href='#' onclick='showExample("square")'>Square</a>
+	</li>
+	<li>
+		<a href='#' onclick='showExample("figure")'>Simple Figure</a>
+	</li>
+	<li>
+		<a href='#' onclick='showExample("circle")'>Simple Circle</a>
+	</li>
+	<li>
+		<a href='#' onclick='showExample("rotated")'>Rotated Figure</a>
+	</li>
+</ul>
+
+<div id='printhello' class='example'>
+print [Hello World]
+</div>
+<div id='square' class='example'>
+forward 40 left 90
+forward 40 left 90
+forward 40 left 90
+forward 40 left 90
+</div>
+<div id='figure' class='example'>
+to square :side
+	repeat 4 [ forward :side left 90 ]
+end
+
+to figure
+	repeat 36 [ square 40 left 10 ]
+end
+
+home figure
+</div>
+<div id='circle' class='example'>
+home
+repeat 72 [ forward 5 left 5 ]
+</div>
+<div id='rotated' class='example'>
+to figure
+	right 45
+	repeat 4 [ forward 40 left 90 ]
+	left 45
+end
+home
+penup forward 50 pendown
+repeat 72 [figure left 95 forward 5 right 90]
+</div>
+</td>
+<td valign="top">
+<canvas id="canvas" width="300" height="300">
+</canvas>
+</td>
+</tr>
+</table>
+
+<script type="text/javascript">
+	var canvas = document.getElementById('canvas');
+	var context = canvas.getContext("2d");
+	context.strokeStyle = "black";
+	context.lineJoin = "round";
+	context.lineWidth = 0.2;
+	var xoffset = 150;
+	var yoffset = 150;
+	var canvasx = xoffset;
+	var canvasy = yoffset;
+	var canvaspen = true;
+
+	context.beginPath();
+	context.moveTo(canvasx, canvasy);
+	context.closePath();
+	
+	ajlogo.Turtle.onMove(onMove);
+	ajlogo.Turtle.onPen(onPen);
+
+	function onMove(x, y) {
+		if (!canvaspen)
+		{
+			canvasx = xoffset + x;
+			canvasy = xoffset - y;
+			return;
+		}
+		
+		context.beginPath();
+		context.moveTo(canvasx, canvasy);
+		canvasx = xoffset + x;
+		canvasy = xoffset - y;
+		context.lineTo(canvasx, canvasy);
+		context.closePath();
+		context.stroke();
+	};
+
+	function onPen(pen) {
+		canvaspen = pen;
+	};
+</script>
     
   </body>
 </html>
