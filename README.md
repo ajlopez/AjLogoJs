@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/ajlopez/AjLogoJs.png)](http://travis-ci.org/ajlopez/AjLogoJs)
 # AjLogoJs
 
 Logo interpreter written in Javascript, using TDD (Node assert).
