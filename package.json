@@ -1,7 +1,7 @@
 { "name": "ajlogo"
 , "description": "Logo Programming Language implemented in Javascript, for browser and Node.js"
 , "keywords": [ "logo", "nodejs", "javascript", "browser" ]
-, "version": "0.0.1-alfa"
+, "version": "0.0.1"
 , "author": "Angel 'Java' Lopez <webmaster@ajlopez.com> (http://www.ajlopez.com)"
 , "repository": { "type": "git", "url": "git://github.com/ajlopez/AjLogoJs.git" }
 , "main": "./lib/ajlogo.js"
