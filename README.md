@@ -1,35 +1,59 @@
 # AjLogoJs
 
-Logo interpreter written in Javascript, using TDD (Node assert).
+Logo interpreter written in Javascript.
 
-## Simple Assert Tests
+## Installation
 
-There are simple tests using node built-in assert module
-
-```
-node tests\tests
-```
-
-In Windows, you have a command file:
+Via npm on Node:
 
 ```
-tests.cmd
+npm install ajlogo
 ```
 
-## NodeUnit Tests
+## Usage
 
-Install NodeUnit using npm from project folder
+Reference in your program:
 
-```
-npm install nodeunit
-```
-
-Then run all tests in test folder
-
-```
-nodeunit test
+```js
+var ajlogo = require('ajlogo');
 ```
 
-(In Windows, there is a nodeunit.cmd that calls the nodeunit script)
+In your browser:
+
+```html
+<script src="ajlogo.js" type="text/javascript"></script>
+```
+
+TBD
+
+## Development
+
+```
+git clone git://github.com/ajlopez/AjLogoJs.git
+cd AjLogoJs
+npm install
+npm test
+```
+
+## Samples
+
+TBD
+
+## To do
+
+- Samples
+
+## Versions
+
+TBD
+
+## Contribution
+
+Feel free to [file issues](https://github.com/ajlopez/AjLogoJs) and submit
+[pull requests](https://github.com/ajlopez/AjLogoJs/pulls) — contributions are
+welcome.
+
+If you submit a pull request, please be sure to add or update corresponding
+test cases, and ensure that `npm test` continues to pass.
 
 
